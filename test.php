@@ -15,8 +15,13 @@ echo "-получаем api-key\n";
 $res=$zab->Auth($login, $password);
 if (isset($res->result)==true){
     if ($res->result!==false){        
+        // cсписок хостов
         $res=$zab->Execute("host.get", ["output"=>["hostid","host"],"selectInterfaces"=>["interfaceid","ip"]]);
         var_dump($res);
+        // список активных триггеров
+        $res=$zab->Execute("trigger.get", ["only_true"=>1,"skipDependent"=>1,"monitored"=>1,"active"=>1,"output"=>'extend',"expandDescription"=>1, "min_severity"=>"priority"]);
+        var_dump($res);
+        
     } else {
         var_dump($res);        
         die(-1);

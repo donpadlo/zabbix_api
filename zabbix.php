@@ -73,7 +73,8 @@ function GetInitial(){
  */    
 function Auth($login,$pass){       
     if ($this->debug==true){echo "-Login and get Api key\n";};
-    $ret= $this->Execute("user.login", ["user"=>$login,"password"=>$pass]); 
+        $ret= $this->Execute("user.login", ["user"=>$login,"password"=>$pass]);               
+        $this->api_key=$ret->result;   
     return $ret;        
 } 
 /**
@@ -100,8 +101,7 @@ function Execute($method,$params){
           $ret=["result"=>false,"message"=>curl_error($curl)];              
     } else {
         if ($this->debug==true){var_dump($data);};
-            $ret=json_decode($data);
-            $this->api_key=$ret->result;            
+            $ret=json_decode($data);                     
             curl_close($curl);
     };    
     return $ret;            
